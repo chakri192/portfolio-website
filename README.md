@@ -1,4 +1,4 @@
-# Personal Portfolio Website 🌐
+# Personal Portfolio Website 
 
 A clean, dark minimalist portfolio website built from scratch — no frameworks, no libraries, pure HTML, CSS, and JavaScript.
 
