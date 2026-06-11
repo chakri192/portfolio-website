@@ -83,3 +83,12 @@ portfolio-website/
 **V Chakradhar** · [github.com/chakri192](https://github.com/chakri192) · [linkedin.com/in/1chakradhar-v1](https://linkedin.com/in/1chakradhar-v1)
 
 1st Year CSE Student · Bengaluru, India
+
+### AI tooling
+
+Documentation assisted by local LLMs via [Ollama](https://ollama.com):
+
+| Model | Used for |
+|-------|----------|
+| `qwen2.5-coder:7b` | Code suggestions, refactoring |
+| `llama3.1:8b` | Prose, documentation, commit messages |
