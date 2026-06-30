@@ -1,4 +1,26 @@
-// Scroll reveal
+// ── Theme: apply saved preference before first paint ─────────────────────────
+(function () {
+  if (localStorage.getItem('theme') === 'light')
+    document.documentElement.setAttribute('data-theme', 'light');
+})();
+
+// ── Theme toggle ──────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const light = document.documentElement.getAttribute('data-theme') === 'light';
+    if (light) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+});
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
 const fades = document.querySelectorAll('.fade');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -7,10 +29,9 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 fades.forEach(el => io.observe(el));
 
-// Hero loads immediately
 document.querySelector('.hero').classList.add('in');
 
-// Active nav highlight
+// ── Active nav highlight ──────────────────────────────────────────────────────
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
@@ -21,10 +42,9 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// ── GitHub API: auto-fetch and render projects ──────────────────────────────
-
+// ── GitHub API: auto-fetch and render projects ────────────────────────────────
 const GITHUB_USER = 'chakri192';
-const SKIP_REPOS = ['chakri192', 'portfolio-website'];
+const SKIP_REPOS  = ['chakri192', 'portfolio-website'];
 
 const LANG_DOT = {
   'C':          'lang-c',
@@ -34,16 +54,14 @@ const LANG_DOT = {
   'Shell':      'lang-sh',
 };
 
-function langDotClass(lang) {
-  return LANG_DOT[lang] || 'lang-c';
-}
+function langDotClass(lang) { return LANG_DOT[lang] || 'lang-c'; }
 
 function makeProjectItem(repo) {
-  const dot = repo.language ? `<span class="lang-dot ${langDotClass(repo.language)}"></span>` : '';
+  const dot  = repo.language ? `<span class="lang-dot ${langDotClass(repo.language)}"></span>` : '';
   const desc = repo.description || 'No description provided.';
   const tags = [];
   if (repo.language) tags.push(repo.language);
-  if (repo.topics && repo.topics.length) repo.topics.slice(0, 4).forEach(t => tags.push(t));
+  if (repo.topics?.length) repo.topics.slice(0, 4).forEach(t => tags.push(t));
 
   return `
     <div class="project-item fade in">
@@ -62,22 +80,15 @@ function makeProjectItem(repo) {
 async function renderProjects() {
   const list = document.getElementById('projects-list');
   if (!list) return;
-
   try {
-    const res = await fetch(
-      `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=30`
-    );
+    const res  = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=30`);
     if (!res.ok) throw new Error('API error');
-    const repos = await res.json();
+    const repos    = await res.json();
     const filtered = repos.filter(r => !r.fork && !SKIP_REPOS.includes(r.name));
-
-    if (!filtered.length) {
-      list.innerHTML = '<div class="project-item fade in"><div><div class="project-desc" style="color:var(--text-2)">No projects found.</div></div></div>';
-      return;
-    }
-
-    list.innerHTML = filtered.map(makeProjectItem).join('');
-  } catch (e) {
+    list.innerHTML = filtered.length
+      ? filtered.map(makeProjectItem).join('')
+      : '<div class="project-item fade in"><div><div class="project-desc" style="color:var(--text-2)">No projects found.</div></div></div>';
+  } catch {
     list.innerHTML = '<div class="project-item fade in"><div><div class="project-desc" style="color:var(--text-2)">Could not load projects.</div></div></div>';
   }
 }
