@@ -68,7 +68,6 @@ nav {
 .nav-links a:hover,
 .nav-links a.active { color: var(--text); background: var(--bg-hover); }
 
-/* Theme toggle button */
 .theme-toggle {
   display: flex; align-items: center; justify-content: center;
   width: 30px; height: 30px; margin-left: 0.4rem;
@@ -78,12 +77,7 @@ nav {
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 .theme-toggle:hover { border-color: var(--border-hi); color: var(--text); background: var(--bg-hover); }
-.theme-toggle svg { pointer-events: none; display: block; }
-/* show moon in dark, sun in light */
-.icon-moon { display: block; }
-.icon-sun  { display: none; }
-[data-theme="light"] .icon-moon { display: none; }
-[data-theme="light"] .icon-sun  { display: block; }
+.theme-toggle svg { display: block; pointer-events: none; }
 
 /* Hero */
 .hero { padding: 7rem 0 5rem; border-bottom: 1px solid var(--border); }
