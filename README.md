@@ -81,4 +81,4 @@ No build step. No `package.json`.
 ## Author
 
 **V Chakradhar** · [github.com/chakri192](https://github.com/chakri192) · [linkedin.com/in/1chakradhar-v1](https://linkedin.com/in/1chakradhar-v1)  
-1st Year CSE · SEACET, VTU · Bengaluru
+
